@@ -4,20 +4,26 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <a href="/contacts"><h1>Contacts</h1> </a>
+                <a href="/contacts"><h1>Contacts List</h1> </a>
 
-                <form method="GET" action="{{ route('contacts.index') }}">
-                    <input type="text" name="search" placeholder="Search by name or email">
-                    <button type="submit">Search</button>
-                </form>
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <form method="GET" action="{{ route('contacts.index') }}">
+                            <input type="text" name="search" placeholder="Search by name or email">
+                            <button type="submit">Search</button>
+                        </form>
+                    </div>
+                    <div class="col-md-4">
+                        <a class="btn btn-info" href="{{ route('contacts.create') }}">Add New Contact</a>
+                    </div>
+                </div>
 
-                <a href="{{ route('contacts.create') }}">Add New Contact</a>
-
-                <table class="table dark">
+                <table class="table">
                     <thead>
                     <tr>
-                        <th><a href="{{ route('contacts.index', ['sort' => 'name']) }}">Name</a></th>
-                        <th><a href="{{ route('contacts.index', ['sort' => 'created_at']) }}">Created At</a></th>
+                        <th>Name <a href="{{ route('contacts.index', ['sortaz' => 'name']) }}">a-z</a> <a href="{{ route('contacts.index', ['sortza' => 'name']) }}">z-a</a></th>
+                        <th>Email</th>
+                        <th><a href="{{ route('contacts.index', ['sort' => 'created_at']) }}">Date</a></th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -25,14 +31,15 @@
                     @foreach ($contacts as $contact)
                         <tr>
                             <td>{{ $contact->name }}</td>
-                            <td>{{ $contact->created_at }}</td>
+                            <td>{{ $contact->email }}</td>
+                            <td>{{ $contact->created_at->toFormattedDateString() }}</td>
                             <td>
-                                <a href="{{ route('contacts.show', $contact->id) }}">View</a>
-                                <a href="{{ route('contacts.edit', $contact->id) }}">Edit</a>
+                                <a class="btn btn-success" href="{{ route('contacts.show', $contact->id) }}">View</a>
+                                <a class="btn btn-warning" href="{{ route('contacts.edit', $contact->id) }}">Edit</a>
                                 <form action="{{ route('contacts.delete', $contact->id) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit">Delete</button>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
                             </td>
                         </tr>

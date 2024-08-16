@@ -1,14 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Contact Details</h1>
 
-    <p>Name: {{ $contact->name }}</p>
-    <p>Email: {{ $contact->email }}</p>
-    <p>Phone: {{ $contact->phone }}</p>
-    <p>Address: {{ $contact->address }}</p>
-    <p>Created At: {{ $contact->created_at }}</p>
-    <p>Updated At: {{ $contact->updated_at }}</p>
+    <h1 class="mb-4">Contact Details</h1>
 
-    <a href="{{ route('contacts.index') }}">Back to Contacts</a>
+    <p><strong> Name:</strong> {{ $contactDetails->name }}</p>
+    <p><strong> Email:</strong> {{ $contactDetails->email }}</p>
+    <p><strong> Phone:</strong> {{ $contactDetails->phone }}</p>
+    <p><strong> Address:</strong>{{ $contactDetails->address }}</p>
+    <p><strong> Created At:</strong> {{ $contactDetails->created_at }}</p>
+    <p><strong> Updated At:</strong> {{ $contactDetails->updated_at }}</p>
+
+    <a class="btn btn-info" href="{{ route('contacts.index') }}">Back to Contacts</a>
 @endsection

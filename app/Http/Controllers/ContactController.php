@@ -9,7 +9,16 @@ class ContactController extends Controller
     public function index(Request $request){
         $query = Contact::query();
 
-        // Sorting
+        // Sorting A -Z
+        if ($request->has('sortaz')) {
+            $query->orderBy($request->get('sortaz'), 'asc');
+        }
+
+        // Sorting Z -A
+        if ($request->has('sortza')) {
+            $query->orderBy($request->get('sortza'), 'desc');
+        }
+        // Sorting date
         if ($request->has('sort')) {
             $query->orderBy($request->get('sort'), 'asc');
         }
@@ -37,34 +46,49 @@ class ContactController extends Controller
             'email' => 'required|email|unique:contacts',
         ]);
 
-        Contact::create($request->all());
 
+        try{
+            Contact::create($request->all());
+        }catch(\Exception $e){
+            return redirect()->back()->withErrors(['email' => 'The email address has already been taken.']);
+        }
+       
         return redirect()->route('contacts.index')->with('success', 'Contact created successfully.');
+
     }
-    public function show(Contact $contact)
+    public function show($id)
     {
-        return view('contacts.show', compact('contact'));
+        $contactDetails = Contact::find($id);
+        return view('contacts.show', compact('contactDetails'));
     }
 
-    public function edit(Contact $contact)
+    public function edit($id)
     {
+        $contact = Contact::find($id);
         return view('contacts.edit', compact('contact'));
     }
 
-    public function update(Request $request, Contact $contact)
+    public function update(Request $request, $id)
     {
+        $contact = Contact::find($id);
+
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:contacts,email,'.$contact->id,
         ]);
 
-        $contact->update($request->all());
+        try{
+            $contact->update($request->all());
+        }catch(\Exception $e){
+            return redirect()->back()->withErrors(['email' => 'The email address has already been taken.']);
+        }       
 
         return redirect()->route('contacts.index')->with('success', 'Contact updated successfully.');
     }
 
-    public function delete(Contact $contact)
+    public function delete($id)
     {
+        $contact = Contact::find($id);
         $contact->delete();
 
         return redirect()->route('contacts.index')->with('success', 'Contact deleted successfully.');
