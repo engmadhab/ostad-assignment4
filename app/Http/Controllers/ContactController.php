@@ -18,10 +18,7 @@ class ContactController extends Controller
         if ($request->has('sortza')) {
             $query->orderBy($request->get('sortza'), 'desc');
         }
-        // Sorting date
-        if ($request->has('sort')) {
-            $query->orderBy($request->get('sort'), 'asc');
-        }
+        
 
         // Search
         if ($request->has('search')) {

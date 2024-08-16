@@ -21,9 +21,9 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Name <a href="{{ route('contacts.index', ['sortaz' => 'name']) }}">a-z</a> <a href="{{ route('contacts.index', ['sortza' => 'name']) }}">z-a</a></th>
+                        <th>Name <a href="{{ route('contacts.index', ['sortaz' => 'name']) }}"> a-z </a> <a href="{{ route('contacts.index', ['sortza' => 'name']) }}"> z-a </a></th>
                         <th>Email</th>
-                        <th><a href="{{ route('contacts.index', ['sort' => 'created_at']) }}">Date</a></th>
+                        <th>Date <a href="{{ route('contacts.index', ['sortaz' => 'created_at']) }}"> asc </a><a href="{{ route('contacts.index', ['sortza' => 'created_at']) }}"> desc </a></th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -32,7 +32,7 @@
                         <tr>
                             <td>{{ $contact->name }}</td>
                             <td>{{ $contact->email }}</td>
-                            <td>{{ $contact->created_at->toFormattedDateString() }}</td>
+                            <td>{{ $contact->created_at->toDateString() }}</td>
                             <td>
                                 <a class="btn btn-success" href="{{ route('contacts.show', $contact->id) }}">View</a>
                                 <a class="btn btn-warning" href="{{ route('contacts.edit', $contact->id) }}">Edit</a>
